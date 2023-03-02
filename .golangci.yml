@@ -1,0 +1,13 @@
+run:
+  timeout: 3m
+
+linters-settings:
+  gomnd:
+    settings:
+      mnd:
+        ignored-numbers: "0o666,0o777"
+linters:
+  enable-all: true
+  disable:
+    # New で interface を戻り値とすることを許す。
+    - ireturn

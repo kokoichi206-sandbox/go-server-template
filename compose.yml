@@ -2,13 +2,15 @@ version: '3.9'
 
 services:
   postgres:
-    image: postgres:12-alpine
+    image: postgres:15-alpine
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=sakamichi
+      - POSTGRES_DB=postgresql
     ports:
       - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
   jaeger:
     image: jaegertracing/all-in-one:latest

@@ -17,7 +17,7 @@ bootstrap: ## 外部ツールをインストールする。
 
 DC = docker compose
 psql:	## docker compose で起動した postgresql の db に接続する。
-	$(DC) exec postgresql psql -U root postgresql 
+	$(DC) exec postgres psql -U root postgresql 
 
 godoc:	## godoc をローカルで表示する。http://localhost:8080/{module_name}
 	pkgsite

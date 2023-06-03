@@ -33,5 +33,9 @@ lint-fix:	## lint 実行時, gofumpt のエラーが出たらやると良い。
 serve:	## サーバーを起動する。
 	go run app/*
 
+build-local:	## バイナリをビルドする（race オプションがついているため、ローカル実行専用とする）。
+	go build -race -o app-local app/*
+
+# カバレッジが低い場合は build-loacl でも動かしてみて競合の確認をしたい。
 test:	## 全テストを実行する。
-	go test -cover -shuffle=on ./... -v
+	go test -race -cover -shuffle=on ./... -v

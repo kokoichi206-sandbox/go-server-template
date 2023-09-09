@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"kokoichi206-sandbox/go-server-template/repository"
-	"kokoichi206-sandbox/go-server-template/util/logger"
+	"github.com/kokoichi206-sandbox/go-server-template/repository"
+	"github.com/kokoichi206-sandbox/go-server-template/util/logger"
 )
 
 type Usecase interface {

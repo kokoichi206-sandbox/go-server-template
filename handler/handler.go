@@ -5,8 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"kokoichi206-sandbox/go-server-template/usecase"
-	"kokoichi206-sandbox/go-server-template/util/logger"
+	"github.com/kokoichi206-sandbox/go-server-template/usecase"
+	"github.com/kokoichi206-sandbox/go-server-template/util/logger"
 )
 
 type handler struct {

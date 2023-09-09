@@ -7,12 +7,12 @@ import (
 
 	"github.com/opentracing/opentracing-go"
 
-	"kokoichi206-sandbox/go-server-template/config"
-	"kokoichi206-sandbox/go-server-template/handler"
-	"kokoichi206-sandbox/go-server-template/repository/database"
-	"kokoichi206-sandbox/go-server-template/usecase"
-	"kokoichi206-sandbox/go-server-template/util"
-	"kokoichi206-sandbox/go-server-template/util/logger"
+	"github.com/kokoichi206-sandbox/go-server-template/config"
+	"github.com/kokoichi206-sandbox/go-server-template/handler"
+	"github.com/kokoichi206-sandbox/go-server-template/repository/database"
+	"github.com/kokoichi206-sandbox/go-server-template/usecase"
+	"github.com/kokoichi206-sandbox/go-server-template/util"
+	"github.com/kokoichi206-sandbox/go-server-template/util/logger"
 )
 
 const (

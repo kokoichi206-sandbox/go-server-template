@@ -6,8 +6,8 @@ import (
 
 	_ "github.com/lib/pq" // postgres driver
 
-	"kokoichi206-sandbox/go-server-template/repository"
-	"kokoichi206-sandbox/go-server-template/util/logger"
+	"github.com/kokoichi206-sandbox/go-server-template/repository"
+	"github.com/kokoichi206-sandbox/go-server-template/util/logger"
 )
 
 type database struct {

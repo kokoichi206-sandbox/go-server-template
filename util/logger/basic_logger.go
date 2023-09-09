@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+
+	"github.com/kokoichi206-sandbox/go-server-template/util"
 )
 
 type basicLogger struct {
@@ -15,10 +17,11 @@ type basicLogger struct {
 }
 
 type logMessage struct {
-	Host    string `json:"hostname"`
-	Service string `json:"service"`
-	Message string `json:"message"`
-	Status  string `json:"status"`
+	Host      string `json:"hostname"`
+	Service   string `json:"service"`
+	Message   string `json:"message"`
+	Status    string `json:"status"`
+	RequestID string `json:"request_id,omitempty"`
 }
 
 func NewBasicLogger(
@@ -83,10 +86,11 @@ func (b *basicLogger) Print(ctx context.Context, level Level, msg string) {
 	}
 
 	logMsg := logMessage{
-		Host:    b.host,
-		Service: b.service,
-		Message: msg,
-		Status:  level.String(),
+		Host:      b.host,
+		Service:   b.service,
+		Message:   msg,
+		Status:    level.String(),
+		RequestID: util.GetRequestID(ctx),
 	}
 
 	jsonBytes, _ := json.Marshal(logMsg)

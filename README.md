@@ -1,5 +1,27 @@
 # server template
 
+README of this template.
+
+## Requirements
+
+### gonew
+
+``` sh
+go install golang.org/x/tools/cmd/gonew@latest
+```
+
+## Make project
+
+``` sh
+gonew github.com/kokoichi206-sandbox/go-server-template <module_name>
+```
+
+---
+
+# <project_name>
+
+README of the project.
+
 ## Environments
 
 | key | description | default |

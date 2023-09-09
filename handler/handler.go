@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"context"
 	"errors"
 	"net/http"
 
@@ -33,7 +32,10 @@ func New(logger logger.Logger, usecase usecase.Usecase) *handler {
 }
 
 func (h *handler) setupRoutes() {
-	h.Engine.GET("/health", handlerWrapper(h.Health, h.logger))
+	base := h.Engine.Group("/api/v1")
+	base.Use(h.requestIDMW())
+
+	base.Handle(http.MethodGet, "/health", handlerWrapper(h.Health, h.logger))
 }
 
 func handlerWrapper(fun func(c *gin.Context) error, logger logger.Logger) gin.HandlerFunc {
@@ -57,7 +59,7 @@ func handleError(c *gin.Context, logger logger.Logger, err error) {
 	}
 
 	if e.Log != "" {
-		logger.Error(context.Background(), e.Log)
+		logger.Error(c.Request.Context(), e.Log)
 	}
 
 	c.JSON(e.StatusCode, gin.H{

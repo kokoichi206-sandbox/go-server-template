@@ -1,7 +1,7 @@
 package util
 
 import (
-	"errors"
+	"fmt"
 	"io"
 	"net"
 	"time"
@@ -10,10 +10,10 @@ import (
 	"github.com/uber/jaeger-client-go/config"
 )
 
-// By default, jaeger is listening at "127.0.0.1:5775"
+// By default, jaeger is listening at "127.0.0.1:5775".
 func NewJaegerTracer(host, port, service string) (opentracing.Tracer, io.Closer, error) {
 	if host == "" || port == "" {
-		return nil, nil, errors.New("host or port is empty.")
+		return nil, nil, fmt.Errorf("host or port is empty")
 	}
 
 	addr := net.JoinHostPort(host, port)

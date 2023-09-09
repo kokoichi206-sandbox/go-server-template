@@ -29,7 +29,6 @@ func NewBasicLogger(
 	host string,
 	service string,
 ) Logger {
-
 	logger := &basicLogger{
 		level:   Info,
 		writer:  writer,
@@ -93,7 +92,10 @@ func (b *basicLogger) Print(ctx context.Context, level Level, msg string) {
 		RequestID: util.GetRequestID(ctx),
 	}
 
+	//nolint:errchkjson
 	jsonBytes, _ := json.Marshal(logMsg)
+
+	//nolint:errcheck
 	b.writer.Write(jsonBytes)
 }
 

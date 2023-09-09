@@ -1,6 +1,6 @@
 package apperr
 
-type AppErr struct {
+type AppError struct {
 	StatusCode int
 	Message    string
 	Log        string
@@ -8,6 +8,6 @@ type AppErr struct {
 
 // Error returns error message.
 // AppErr satisfies error interface.
-func (e AppErr) Error() string {
+func (e AppError) Error() string {
 	return e.Message
 }

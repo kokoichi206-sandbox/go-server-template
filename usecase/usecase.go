@@ -5,8 +5,7 @@ import (
 	"github.com/kokoichi206-sandbox/go-server-template/util/logger"
 )
 
-type Usecase interface {
-}
+type Usecase interface{}
 
 type usecase struct {
 	database repository.Database

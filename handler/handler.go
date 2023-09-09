@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-
 	"github.com/kokoichi206-sandbox/go-server-template/model/apperr"
 	"github.com/kokoichi206-sandbox/go-server-template/usecase"
 	"github.com/kokoichi206-sandbox/go-server-template/util"
@@ -19,6 +18,7 @@ type handler struct {
 	Engine *gin.Engine
 }
 
+//nolint:revive
 func New(logger logger.Logger, usecase usecase.Usecase) *handler {
 	r := gin.Default()
 
@@ -50,9 +50,9 @@ func handlerWrapper(fun func(c *gin.Context) error, logger logger.Logger) gin.Ha
 // handleError is a helper function to handle error.
 // This function writes status code and error message to response body.
 func handleError(c *gin.Context, logger logger.Logger, err error) {
-	var e apperr.AppErr
+	var e apperr.AppError
 	if ok := errors.As(err, &e); !ok {
-		e = apperr.AppErr{
+		e = apperr.AppError{
 			StatusCode: http.StatusInternalServerError,
 			Message:    "internal server error",
 			Log:        err.Error(),

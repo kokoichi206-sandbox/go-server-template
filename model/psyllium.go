@@ -1,4 +1,3 @@
 package model
 
-type Psyllium struct {
-}
+type Psyllium struct{}

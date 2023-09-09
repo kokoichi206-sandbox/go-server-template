@@ -1,4 +1,4 @@
-module kokoichi206-sandbox/go-server-template
+module github.com/kokoichi206-sandbox/go-server-template
 
 go 1.20
 

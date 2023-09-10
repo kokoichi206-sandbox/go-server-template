@@ -17,13 +17,13 @@ type Config struct {
 	AgentPort string
 
 	// Settings of database.
-	DbDriver   string
-	DbHost     string
-	DbPort     string
-	DbUser     string
-	DbPassword string
-	DbName     string
-	DbSSLMode  string
+	DBDriver   string
+	DBHost     string
+	DBPort     string
+	DBUser     string
+	DBPassword string
+	DBName     string
+	DBSSLMode  string
 }
 
 // get configuration from environment variables.
@@ -81,12 +81,12 @@ func New() Config {
 		ServerPort: serverPort,
 		AgentHost:  agentHort,
 		AgentPort:  agentPort,
-		DbDriver:   dbDriver,
-		DbHost:     dbHost,
-		DbPort:     dbPort,
-		DbUser:     dbUser,
-		DbPassword: dbPassword,
-		DbName:     dbName,
-		DbSSLMode:  dbSslMode,
+		DBDriver:   dbDriver,
+		DBHost:     dbHost,
+		DBPort:     dbPort,
+		DBUser:     dbUser,
+		DBPassword: dbPassword,
+		DBName:     dbName,
+		DBSSLMode:  dbSslMode,
 	}
 }

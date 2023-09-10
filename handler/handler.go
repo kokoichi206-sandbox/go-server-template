@@ -1,11 +1,13 @@
 package handler
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-
+	"github.com/kokoichi206-sandbox/go-server-template/model/apperr"
 	"github.com/kokoichi206-sandbox/go-server-template/usecase"
+	"github.com/kokoichi206-sandbox/go-server-template/util"
 	"github.com/kokoichi206-sandbox/go-server-template/util/logger"
 )
 
@@ -16,6 +18,7 @@ type handler struct {
 	Engine *gin.Engine
 }
 
+//nolint:revive
 func New(logger logger.Logger, usecase usecase.Usecase) *handler {
 	r := gin.Default()
 
@@ -30,11 +33,47 @@ func New(logger logger.Logger, usecase usecase.Usecase) *handler {
 }
 
 func (h *handler) setupRoutes() {
-	h.Engine.GET("/health", h.Health)
+	base := h.Engine.Group("/api/v1")
+	base.Use(h.requestIDMW())
+
+	base.Handle(http.MethodGet, "/health", handlerWrapper(h.Health, h.logger))
 }
 
-func (h *handler) Health(c *gin.Context) {
+func handlerWrapper(fun func(c *gin.Context) error, logger logger.Logger) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if err := fun(c); err != nil {
+			handleError(c, logger, err)
+		}
+	}
+}
+
+// handleError is a helper function to handle error.
+// This function writes status code and error message to response body.
+func handleError(c *gin.Context, logger logger.Logger, err error) {
+	var e apperr.AppError
+	if ok := errors.As(err, &e); !ok {
+		e = apperr.AppError{
+			StatusCode: http.StatusInternalServerError,
+			Message:    "internal server error",
+			Log:        err.Error(),
+		}
+	}
+
+	if e.Log != "" {
+		logger.Error(util.DetachedCtx{
+			Parent: c.Request.Context(),
+		}, e.Log)
+	}
+
+	c.JSON(e.StatusCode, gin.H{
+		"error": e.Message,
+	})
+}
+
+func (h *handler) Health(c *gin.Context) error {
 	c.JSON(http.StatusOK, gin.H{
 		"health": "ok",
 	})
+
+	return nil
 }

@@ -5,14 +5,13 @@ import (
 	"net"
 	"os"
 
-	"github.com/opentracing/opentracing-go"
-
 	"github.com/kokoichi206-sandbox/go-server-template/config"
 	"github.com/kokoichi206-sandbox/go-server-template/handler"
 	"github.com/kokoichi206-sandbox/go-server-template/repository/database"
 	"github.com/kokoichi206-sandbox/go-server-template/usecase"
 	"github.com/kokoichi206-sandbox/go-server-template/util"
 	"github.com/kokoichi206-sandbox/go-server-template/util/logger"
+	"github.com/opentracing/opentracing-go"
 )
 
 const (
@@ -37,8 +36,8 @@ func main() {
 
 	// database
 	database, err := database.New(
-		cfg.DbDriver, cfg.DbHost, cfg.DbPort, cfg.DbUser, cfg.DbPassword,
-		cfg.DbName, cfg.DbSSLMode, logger,
+		cfg.DBDriver, cfg.DBHost, cfg.DBPort, cfg.DBUser, cfg.DBPassword,
+		cfg.DBName, cfg.DBSSLMode, logger,
 	)
 	if err != nil {
 		logger.Errorf(context.Background(), "failed to db.New: ", err)

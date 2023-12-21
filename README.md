@@ -35,7 +35,7 @@ README of the project.
 | DB_PORT |  | 5432 |
 | DB_USER |  | root |
 | DB_PASSWORD |  | root |
-| DB_NAME |  | sakamichi |
+| DB_NAME |  | postgres |
 | DB_SSL_MODE |  | disable |
 
 ## License

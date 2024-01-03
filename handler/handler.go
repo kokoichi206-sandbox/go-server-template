@@ -1,13 +1,14 @@
 package handler
 
 import (
+	"context"
 	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+
 	"github.com/kokoichi206-sandbox/go-server-template/model/apperr"
 	"github.com/kokoichi206-sandbox/go-server-template/usecase"
-	"github.com/kokoichi206-sandbox/go-server-template/util"
 	"github.com/kokoichi206-sandbox/go-server-template/util/logger"
 )
 
@@ -60,9 +61,7 @@ func handleError(c *gin.Context, logger logger.Logger, err error) {
 	}
 
 	if e.Log != "" {
-		logger.Error(util.DetachedCtx{
-			Parent: c.Request.Context(),
-		}, e.Log)
+		logger.Error(context.WithoutCancel(c.Request.Context()), e.Log)
 	}
 
 	c.JSON(e.StatusCode, gin.H{

@@ -9,7 +9,6 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-
 	"github.com/kokoichi206-sandbox/go-server-template/model/apperr"
 	"github.com/kokoichi206-sandbox/go-server-template/usecase"
 	"github.com/kokoichi206-sandbox/go-server-template/util/logger"
@@ -69,7 +68,7 @@ func formatter(param gin.LogFormatterParams) string {
 		Path:       param.Path,
 	}
 
-	//nolint:errcheck
+	//nolint:errchkjson
 	b, _ := json.Marshal(gl)
 
 	return fmt.Sprintln(string(b))

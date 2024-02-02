@@ -2,8 +2,11 @@ package handler
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 
@@ -21,7 +24,9 @@ type handler struct {
 
 //nolint:revive
 func New(logger logger.Logger, usecase usecase.Usecase) *handler {
-	r := gin.Default()
+	r := gin.New()
+	r.Use(requestLog())
+	r.Use(gin.Recovery())
 
 	h := &handler{
 		logger:  logger,
@@ -31,6 +36,43 @@ func New(logger logger.Logger, usecase usecase.Usecase) *handler {
 	h.setupRoutes()
 
 	return h
+}
+
+type ginLog struct {
+	TimeStamp  time.Time     `json:"time_stamp"`
+	StatusCode int           `json:"status"`
+	Latency    time.Duration `json:"latency"`
+	ClientIP   string        `json:"client_ip"`
+	Method     string        `json:"method"`
+	Path       string        `json:"path"`
+	RequestID  string        `json:"request_id"`
+}
+
+func requestLog() gin.HandlerFunc {
+	return gin.LoggerWithConfig(gin.LoggerConfig{
+		Formatter: formatter,
+		SkipPaths: []string{},
+	})
+}
+
+func formatter(param gin.LogFormatterParams) string {
+	if param.Latency > time.Minute {
+		param.Latency = param.Latency.Truncate(time.Second)
+	}
+
+	gl := ginLog{
+		TimeStamp:  param.TimeStamp,
+		StatusCode: param.StatusCode,
+		Latency:    param.Latency.Truncate(time.Millisecond),
+		ClientIP:   param.ClientIP,
+		Method:     param.Method,
+		Path:       param.Path,
+	}
+
+	//nolint:errcheck
+	b, _ := json.Marshal(gl)
+
+	return fmt.Sprintln(string(b))
 }
 
 func (h *handler) setupRoutes() {

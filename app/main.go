@@ -28,7 +28,7 @@ func main() {
 	// tracer
 	tracer, traceCloser, err := util.NewJaegerTracer(cfg.AgentHost, cfg.AgentPort, service)
 	if err != nil {
-		logger.Errorf(context.Background(), "cannot initialize jaeger tracer: ", err)
+		logger.Errorf(context.Background(), "cannot initialize jaeger tracer: %s", err)
 	} else {
 		defer traceCloser.Close()
 		opentracing.SetGlobalTracer(tracer)
@@ -40,7 +40,7 @@ func main() {
 		cfg.DBName, cfg.DBSSLMode, logger,
 	)
 	if err != nil {
-		logger.Errorf(context.Background(), "failed to db.New: ", err)
+		logger.Errorf(context.Background(), "failed to db.New: %s", err)
 	}
 
 	// usecase
@@ -52,6 +52,6 @@ func main() {
 
 	// run
 	if err := h.Engine.Run(addr); err != nil {
-		logger.Critical(context.Background(), "failed to serve http")
+		logger.Criticalf(context.Background(), "failed to serve http: %s", err)
 	}
 }

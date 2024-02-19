@@ -6,6 +6,7 @@ import (
 
 	"github.com/kokoichi206-sandbox/go-server-template/repository"
 	"github.com/kokoichi206-sandbox/go-server-template/util/logger"
+
 	_ "github.com/lib/pq" // postgres driver
 )
 

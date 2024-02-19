@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+
 	"github.com/kokoichi206-sandbox/go-server-template/model/apperr"
 	"github.com/kokoichi206-sandbox/go-server-template/usecase"
 	"github.com/kokoichi206-sandbox/go-server-template/util/logger"

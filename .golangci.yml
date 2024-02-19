@@ -6,6 +6,17 @@ linters-settings:
     settings:
       mnd:
         ignored-numbers: "0o666,0o777"
+  gci:
+    sections:
+      - standard
+      - default
+      # FIXME: 実際のテンプレート使用時に変更する。
+      - prefix(github.com/kokoichi206-sandbox/go-server-template)
+      - blank
+      - dot
+    skip-generated: false
+    # Enable custom order of sections.
+    custom-order: true
 linters:
   enable-all: true
   disable:

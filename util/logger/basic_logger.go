@@ -95,8 +95,7 @@ func (b *basicLogger) Print(ctx context.Context, level Level, msg string) {
 	//nolint:errchkjson
 	jsonBytes, _ := json.Marshal(logMsg)
 
-	//nolint:errcheck
-	b.writer.Write(jsonBytes)
+	fmt.Fprintln(b.writer, string(jsonBytes))
 }
 
 // Set Level after struct is initialized.

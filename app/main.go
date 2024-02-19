@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"net"
 	"net/http"
 	"os"
@@ -20,7 +21,9 @@ import (
 )
 
 const (
-	service = "server-template"
+	service           = "server-template"
+	gracePeriod       = 5 * time.Second
+	readHeaderTimeout = 5 * time.Second
 )
 
 func main() {
@@ -57,12 +60,13 @@ func main() {
 
 	// run
 	srv := &http.Server{
-		Addr:    addr,
-		Handler: h.Engine,
+		Addr:              addr,
+		Handler:           h.Engine,
+		ReadHeaderTimeout: readHeaderTimeout,
 	}
 
 	go func() {
-		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		if err := srv.ListenAndServe(); err != nil && errors.Is(err, http.ErrServerClosed) {
 			logger.Errorf(context.Background(), "failed to listen and serve: %s", err)
 		}
 	}()
@@ -73,7 +77,7 @@ func main() {
 	logger.Info(context.Background(), "Server is shutting down...")
 
 	// 5 seconds grace period.
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), gracePeriod)
 	defer cancel()
 
 	if err := srv.Shutdown(ctx); err != nil {

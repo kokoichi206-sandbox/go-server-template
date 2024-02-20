@@ -37,7 +37,7 @@ lint-fix:	## lint 実行時, gofumpt のエラーが出たらやると良い。
 
 .PHONY: serve
 serve:	## サーバーを起動する。
-	go run app/*
+	go run -race app/*
 
 .PHONY: dev
 dev:	## Hot reload 付きでサーバーを起動する。

@@ -3,7 +3,7 @@ root = "."
 tmp_dir = "tmp"
 
 [build]
-cmd = "go build -o ./tmp/main ./app/*.go"
+cmd = "go build -race -o ./tmp/main ./app/*.go"
 bin = "tmp/main"
 
 # Watch these filename extensions.
